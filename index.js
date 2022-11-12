@@ -48,11 +48,11 @@ const product = [
   },
 ];
 
-const getIndex=(req)=>{
-    const findItem = product.find(item => item.id==req.body.id)
-    const index = product.includes(findItem)
-    return index
-}
+const getIndex = (req) => {
+  const findItem = product.find((item) => item.id == req.body.id);
+  const index = product.includes(findItem);
+  return index;
+};
 app.use(cors());
 app.use(express.json({ extended: true }));
 app.use(express.urlencoded({ extended: true }));
@@ -61,23 +61,22 @@ app.get("/store", (req, res) => {
   res.send("server is good");
 });
 
-app.get('/store/product',(req,res)=>{
-    res.send({massage:'all good',product})
-})
+app.get("/store/product", (req, res) => {
+  res.send({ massage: "all good", product });
+});
 
-app.post('/store/create',(req,res)=>{
-    const data = req.body.data
-    product.push(data)
-    data? res.send('product Add') : res.send('error no product add')
+app.post("/store/create", (req, res) => {
+  const data = req.body.data;
+  product.push(data);
+  data ? res.send("product Add") : res.send("error no product add");
+});
 
-})
-
-app.put('/store/edit',(req,res)=>{
-    const productIndex = getIndex(req)
-    if(productIndex >-1){
-        product[productIndex] = req.body.data
-    }
-})
+app.put("/store/edit", (req, res) => {
+  const productIndex = getIndex(req);
+  if (productIndex > -1) {
+    product[productIndex] = req.body.data;
+  }
+});
 app.listen(port, () => {
   log(`this is the server:${port}`);
 });
