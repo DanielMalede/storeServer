@@ -5,6 +5,12 @@ const { log } = require("console");
 const app = express();
 const port = 5000;
 
+const getIndex = (req) => {
+  const findItem = product.find((item) => item.id == req.body.id);
+  const index = product.includes(findItem);
+  return index;
+};
+
 const product = [
   {
     id: 1,
@@ -48,11 +54,6 @@ const product = [
   },
 ];
 
-const getIndex = (req) => {
-  const findItem = product.find((item) => item.id == req.body.id);
-  const index = product.includes(findItem);
-  return index;
-};
 app.use(cors());
 app.use(express.json({ extended: true }));
 app.use(express.urlencoded({ extended: true }));
