@@ -79,5 +79,5 @@ app.put("/store/edit", (req, res) => {
 });
 
 app.listen(port, () => {
-  log(`this is the server:${port}`);
+  log(`this is the server: ${port}`);
 });
