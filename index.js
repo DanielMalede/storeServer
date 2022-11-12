@@ -78,6 +78,7 @@ app.put("/store/edit", (req, res) => {
     product[productIndex] = req.body.data;
   }
 });
+
 app.listen(port, () => {
   log(`this is the server:${port}`);
 });
