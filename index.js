@@ -53,7 +53,6 @@ const product = [
     img: "someUrl",
   },
 ];
-
 app.use(cors());
 app.use(express.json({ extended: true }));
 app.use(express.urlencoded({ extended: true }));
