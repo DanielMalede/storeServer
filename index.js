@@ -48,6 +48,11 @@ const product = [
   },
 ];
 
+const getIndex=(req)=>{
+    const findItem = product.find(item => item.id==req.body.id)
+    const index = product.includes(findItem)
+    return index
+}
 app.use(cors());
 app.use(express.json({ extended: true }));
 app.use(express.urlencoded({ extended: true }));
@@ -65,6 +70,13 @@ app.post('/store/create',(req,res)=>{
     product.push(data)
     data? res.send('product Add') : res.send('error no product add')
 
+})
+
+app.put('/store/edit',(req,res)=>{
+    const productIndex = getIndex(req)
+    if(productIndex >-1){
+        product[productIndex] = req.body.data
+    }
 })
 app.listen(port, () => {
   log(`this is the server:${port}`);
