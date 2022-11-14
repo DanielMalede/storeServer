@@ -2,12 +2,12 @@ const express = require("express");
 const cors = require("cors");
 const fs = require("fs");
 const { log } = require("console");
+const { raw } = require("express");
 const app = express();
 const port = 5000;
 
 const getIndex = (req) => {
   const findItem = product.find((item) => item.id == req.params.id);
-  log(findItem);
   const index = product.indexOf(findItem);
   return index;
 };
@@ -109,12 +109,12 @@ const shifts = [
     dayOfWeek: "5",
   },
   {
-    id: 0,
+    id: 2,
     employees: ["lior", "gad", "bar"],
     startTime: "22:00",
     finishTime: "06:00",
     dayOfWeek: "5",
-  }
+  },
 ];
 app.use(cors());
 app.use(express.json({ extended: true }));
@@ -204,9 +204,26 @@ app.get("/store/employeeOver18", (req, res) => {
   employeeOver18 ? res.send(employeeOver18) : res.send("fved");
 });
 
-app.get('/store/shifts',(req,res)=>{
-  res.send(shifts)
-})
+app.get("/store/shifts", (req, res) => {
+  res.send(shifts);
+});
+
+app.post("/store/savaShift", (req, res) => {
+  const data = req.body.data;
+  data === undefined ? "" : shifts.push(data);
+  data ? res.send("shift has added") : res.send("err shift not added");
+});
+
+app.put("/store/editShift/:id", (req, res) => {
+  const employeesIndex = getIndex(req);
+  const data = req.body.data;
+  if (employeesIndex > -1) {
+    employees[employeesIndex] = data;
+    log(employeesIndex)
+    return res.send("employees update");
+  }
+  res.send("employees not update");
+});
 
 app.listen(port, () => {
   log(`this is the server: ${port}`);
