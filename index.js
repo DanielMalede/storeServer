@@ -219,7 +219,7 @@ app.put("/store/editShift/:id", (req, res) => {
   const data = req.body.data;
   if (employeesIndex > -1) {
     employees[employeesIndex] = data;
-    log(employeesIndex)
+    log(employeesIndex);
     return res.send("employees update");
   }
   res.send("employees not update");
