@@ -204,6 +204,10 @@ app.get("/store/employeeOver18", (req, res) => {
   employeeOver18 ? res.send(employeeOver18) : res.send("fved");
 });
 
+app.get('/store/shifts',(req,res)=>{
+  res.send(shifts)
+})
+
 app.listen(port, () => {
   log(`this is the server: ${port}`);
 });
