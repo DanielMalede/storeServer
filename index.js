@@ -7,6 +7,7 @@ const port = 5000;
 
 const getIndex = (req) => {
   const findItem = product.find((item) => item.id == req.params.id);
+  log(findItem);
   const index = product.indexOf(findItem);
   return index;
 };
@@ -62,6 +63,58 @@ const employees = [
     phoneNumber: 0524755555,
     email: "daniel@hmail.com",
   },
+  {
+    id: 2,
+    name: "lior",
+    age: 27,
+    phoneNumber: 05247555555,
+    email: "lior@hmail.com",
+  },
+  {
+    id: 3,
+    name: "cds",
+    age: 5,
+    phoneNumber: 052475524555,
+    email: "asd@hmail.com",
+  },
+  {
+    id: 4,
+    name: "cds",
+    age: 25,
+    phoneNumber: 0524755242555,
+    email: "vfr@hmail.com",
+  },
+  {
+    id: 5,
+    name: "cds",
+    age: 5,
+    phoneNumber: 05247524775555,
+    email: "vfd@hmail.com",
+  },
+];
+
+const shifts = [
+  {
+    id: 0,
+    employees: ["ChenTheKing", "MaladaBadMan", "stupidJasoo"],
+    startTime: "06:00",
+    finishTime: "14:00",
+    dayOfWeek: "5",
+  },
+  {
+    id: 1,
+    employees: ["hen", "yaso", "eldad"],
+    startTime: "14:00",
+    finishTime: "22:00",
+    dayOfWeek: "5",
+  },
+  {
+    id: 0,
+    employees: ["lior", "gad", "bar"],
+    startTime: "22:00",
+    finishTime: "06:00",
+    dayOfWeek: "5",
+  }
 ];
 app.use(cors());
 app.use(express.json({ extended: true }));
@@ -101,6 +154,54 @@ app.delete("/store/delete/:id", (req, res) => {
 app.get("/store/product/id/:id", (req, res) => {
   const findProduct = product.find((item) => item.id == req.params.id);
   res.send(findProduct);
+});
+
+app.get("/store/employees", (req, res) => {
+  res.send(employees);
+});
+
+app.post("/store/createEmployees", (req, res) => {
+  const data = req.body.data;
+  employees.push(data);
+  data
+    ? res.send("employees has add")
+    : res.send("err employees has not added");
+});
+
+app.delete("/store/deleteEmployees/:id", (req, res) => {
+  const employeesIndex = getIndex(req);
+  if (employeesIndex > -1) {
+    employees.splice(employeesIndex, 1);
+    return res.send("yes");
+  }
+  res.send("no");
+});
+
+app.put("/store/updateEmployees/:id", (req, res) => {
+  const employeesIndex = getIndex(req);
+  const data = req.body.data;
+  if (employeesIndex > -1) {
+    employees[employeesIndex] = data;
+    return res.send("employees update");
+  }
+  res.send("employees not update");
+});
+
+app.get("/store/getEmployeesById/:id", (req, res) => {
+  const employeesId = employees.find((item) => item.id == req.params.id);
+  employeesId ? res.send(employeesId) : res.send("no");
+});
+
+app.get("/store/getEmployeeByEmail/:email", (req, res) => {
+  const employeeEmail = employees.find(
+    (item) => item.email == req.params.email
+  );
+  employeeEmail ? res.send(employeeEmail) : res.send("employee not found");
+});
+
+app.get("/store/employeeOver18", (req, res) => {
+  const employeeOver18 = employees.filter((item) => item.age > 18);
+  employeeOver18 ? res.send(employeeOver18) : res.send("fved");
 });
 
 app.listen(port, () => {
